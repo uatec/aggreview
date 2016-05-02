@@ -23,8 +23,8 @@ module.exports = React.createClass({
 			applyMiddleware(
 				thunkMiddleware
 			));
-
-		// TODO: fetch data
+	
+		this.store.dispatch(actions.fetchProducts());
 		
 		if ( !isNode() ) {
 			// TODO: any client side only boot strapping

@@ -27,6 +27,9 @@ app.get('/', function(request, response) {
   response.send('<html><head>' + envVars + '<meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 
+var productsApi = require('./productsApi.js');
+app.use('/api/v1/products', productsApi);
+
 // Static assets
 app.use(express.static(path.resolve(__dirname, '../dist')));
 

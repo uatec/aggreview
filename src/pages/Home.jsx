@@ -5,12 +5,14 @@ var connect = require('react-redux').connect,
 
 var mui = require('material-ui'),
     Card = mui.Card,
+    CardMedia = mui.CardMedia,
     CardTitle = mui.CardTitle;
     
 var actions = require('../actions');
 
 var mapStateToProps = function(state) {
     return {
+        products: state.products
     }; 
 };
 
@@ -23,18 +25,23 @@ var Home = React.createClass({
 
     render: function() {
 
+        var productCards = this.props.products ? this.props.products.map(function(p) {
+            return <Card>
+                <CardMedia
+                    overlay={<CardTitle title={p.title[0]} subtitle={p.description[0]} />}
+                    >
+                    <img src={p.imageUrl[0]} />
+                    </CardMedia>
+            </Card>;           
+        }) : [];
+        
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Aggreview</h1>
                         <h3>View aggregated data in one place.</h3>
                     </center>
                     <div>
-                        <Card>
-                            <CardTitle>
-                                Some Title
-                            </CardTitle>
-                            Some content here
-                        </Card>
+                        {productCards}
                     </div>
                 </div>;
     }
