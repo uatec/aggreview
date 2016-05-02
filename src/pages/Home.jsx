@@ -26,13 +26,16 @@ var Home = React.createClass({
     render: function() {
 
         var productCards = this.props.products ? this.props.products.map(function(p) {
-            return <Card>
-                <CardMedia
-                    overlay={<CardTitle title={p.title[0]} subtitle={p.description[0]} />}
-                    >
-                    <img src={p.imageUrl[0]} />
-                    </CardMedia>
-            </Card>;           
+            return <div>
+                <Card>
+                    <CardMedia
+                        overlay={<CardTitle title={p.title[0]} subtitle={p.description[0]} />}
+                        >
+                        <img src={p.imageUrl[0]} />
+                        </CardMedia>
+                </Card>
+                <br />
+            </div>;           
         }) : [];
         
         return  <div>
