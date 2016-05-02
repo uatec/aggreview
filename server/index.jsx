@@ -24,7 +24,7 @@ app.get('/', function(request, response) {
   if ( GLOBAL.env.enable_isomorphic_rendering ) {
     body = ReactDOMServer.renderToString(<App />);
   }
-  response.send('<html><head>' + envVars + '</head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
+  response.send('<html><head>' + envVars + '<meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 
 // Static assets
