@@ -4,9 +4,8 @@ var connect = require('react-redux').connect,
     _ = require('lodash');
 
 var mui = require('material-ui'),
-    Card = mui.Card,
-    CardMedia = mui.CardMedia,
-    CardTitle = mui.CardTitle;
+    GridList = mui.GridList,
+    GridTile = mui.GridTile;
     
 var actions = require('../actions');
 
@@ -25,17 +24,12 @@ var Home = React.createClass({
 
     render: function() {
 
-        var productCards = this.props.products ? this.props.products.map(function(p) {
-            return <div>
-                <Card>
-                    <CardMedia
-                        overlay={<CardTitle title={p.title[0]} subtitle={p.description[0]} />}
-                        >
+        var productTiles = this.props.products ? this.props.products.map(function(p) {
+            return <GridTile
+                        title={p.title[0]}
+                        subtitle={p.description[0]}>
                         <img src={p.imageUrl[0]} />
-                        </CardMedia>
-                </Card>
-                <br />
-            </div>;           
+            </GridTile>;           
         }) : [];
         
         return  <div>
@@ -43,9 +37,9 @@ var Home = React.createClass({
                         <h1>Aggreview</h1>
                         <h3>View aggregated data in one place.</h3>
                     </center>
-                    <div>
-                        {productCards}
-                    </div>
+                    <GridList>
+                        {productTiles}
+                    </GridList>
                 </div>;
     }
 });
