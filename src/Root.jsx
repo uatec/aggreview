@@ -23,8 +23,12 @@ module.exports = React.createClass({
 			applyMiddleware(
 				thunkMiddleware
 			));
-	
-		this.store.dispatch(actions.fetchProducts());
+			
+		if ( GLOBAL.env.enable_menus ) {
+			this.store.dispatch(actions.fetchMenus());
+		} else {
+			this.store.dispatch(actions.fetchProducts());
+		}
 		
 		if ( !isNode() ) {
 			// TODO: any client side only boot strapping

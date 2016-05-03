@@ -5,6 +5,11 @@ module.exports = function(state, action) {
             return Object.assign({}, state, {
                 products: action.products
             });
+        case 'RECEIVE_MENUS':
+            return Object.assign({}, state, {
+                themeGroups: action.themeGroups,
+                categories: action.categories 
+            });
         default:
             return state;
     }

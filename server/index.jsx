@@ -8,6 +8,7 @@ var path = require('path');
 var _ = require('lodash');
 
 var envVars = '<script>GLOBAL = {}; GLOBAL.env=' + JSON.stringify(_.pick(process.env, [
+  'enable_menus'
   ])) + '</script>';
   
 GLOBAL.env = process.env;
