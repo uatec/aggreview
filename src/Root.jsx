@@ -27,7 +27,7 @@ var ReactRouterRedux = require('react-router-redux'),
 	syncHistoryWithStore = ReactRouterRedux.syncHistoryWithStore,
 	routerReducer = ReactRouterRedux.routerReducer;
 
-module.exports = React.createClass({
+var Root = React.createClass({
 	componentWillMount: function() {
 		this.store = createStore(
 			combineReducers({
@@ -42,7 +42,7 @@ module.exports = React.createClass({
 		this.history = syncHistoryWithStore(browserHistory, this.store)
 
 		this.history.listen(function(location) { console.log('location: ', location.pathname); });
-			
+		
 		if ( GLOBAL.env.enable_menus ) {
 			this.store.dispatch(actions.fetchMenus());
 		} else {
@@ -67,3 +67,5 @@ module.exports = React.createClass({
 			</Provider>;
 	}
 });
+
+module.exports = Root;
