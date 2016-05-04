@@ -47,6 +47,20 @@ module.exports = {
     
     fetchMenus: function() {
         return function(dispatch) {
+
+            if ( GLOBAL.env.stub_menus ) {
+                dispatch(this.receiveMenus([{
+                    id: 'theme_1',
+                    name: 'Theme 1',
+                    themes: []
+                }], [{
+                    id: 'category_1',
+                    name: 'Category 1',
+                    subCategories: []
+                }]));
+                return;  
+            }
+
             request
                 .get('https://cdn.contentful.com/spaces/l4qttwbwoj09/entries?access_token=4f16ed3bfca848053391d2040a9f78d721ca76806a54d3d17bf34f1b572de945')
                 .end(function(err, res) {
@@ -64,7 +78,7 @@ module.exports = {
                         .map(function(i) {
                             return Object.assign({}, i.fields, {
                                 id: i.sys.id
-                            })    
+                            });    
                         })
                         .value();
                     var themeGroups = _.chain(input.items)

@@ -11,11 +11,13 @@ var actions = require('../actions');
 
 var mapStateToProps = function(state) {
     return {
-        products: state.products,
-        categories: state.categories,
-        themeGroups: state.themeGroups
+        products: state.reducers.products,
+        categories: state.reducers.categories,
+        themeGroups: state.reducers.themeGroups
     }; 
 };
+
+var Link = require('react-router').Link;
 
 var mapDispatchToProps = function(dispatch) {
   return {
@@ -36,14 +38,19 @@ var Home = React.createClass({
         
         var categories = this.props.categories ? this.props.categories.map(function(c) {
              return <li>
-                {c.name}
+                <Link to={'/category/' + c.id}>
+                    {c.name}
+                </Link>
              </li>;
         }) : [];
         
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function(tg) {
              return <li>
-                {tg.name}
+                <Link to={'/theme/' + tg.id}>         
+                    {tg.name}
+                </Link>
                 <ul>
+                
                     {tg.themes.map(function(t) {
                       return <li>{t.name}</li>  
                     })}
