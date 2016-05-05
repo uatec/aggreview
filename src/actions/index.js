@@ -125,9 +125,14 @@ var actions = {
     
     fetchMenus: function() {
         return function(dispatch) {
+            
+            var spaceID = GLOBAL.env.contentfulSpaceId;
+            var access_token = GLOBAL.env.contentfulAccessToken;
+
+            var url = 'https://cdn.contentful.com/spaces/' + spaceId + '/entries?access_token=' + access_token;
 
             request
-                .get('https://cdn.contentful.com/spaces/l4qttwbwoj09/entries?access_token=4f16ed3bfca848053391d2040a9f78d721ca76806a54d3d17bf34f1b572de945')
+                .get(url)
                 .end(this.receiveMenus.bind(this));
                 
         }.bind(this);     
