@@ -3,11 +3,11 @@ var jsonPath = require('jsonpath-plus');
 var _ = require('lodash');
 var isNode = require('../utils/isNode.js');
 
+var urlPrefix = '/api/v1';
 if (isNode()) {
     urlPrefix = 'http://localhost:' + (process.env.PORT || 3000) + '/api/v1';
 }
 
-var urlPrefix = '/api/v1';
 var prefix = require('superagent-prefix')(urlPrefix);
 
 var extractThemes = function (input) {
