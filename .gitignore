@@ -2,3 +2,4 @@ node_modules
 dist
 server/generated
 npm-debug.log
+.env
