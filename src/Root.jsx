@@ -7,7 +7,8 @@ var Provider = require('react-redux').Provider;
 var Redux = require('redux'),
     createStore = Redux.createStore,
 	applyMiddleware = Redux.applyMiddleware,
-	combineReducers = Redux.combineReducers;
+	combineReducers = Redux.combineReducers,
+	compose = Redux.compose;
 
 var thunkMiddleware = require('redux-thunk').default;
 
@@ -21,7 +22,8 @@ var isNode = require('./utils/isNode.js');
 var ReactRouter = require('react-router'),
 	Router = ReactRouter.Router,
 	Route = ReactRouter.Route,
-	browserHistory = ReactRouter.browserHistory;
+	browserHistory = ReactRouter.browserHistory,
+	createMemoryHistory = ReactRouter.createMemoryHistory;
 
 var ReactRouterRedux = require('react-router-redux'),
 	syncHistoryWithStore = ReactRouterRedux.syncHistoryWithStore,
@@ -34,12 +36,20 @@ var Root = React.createClass({
 				reducers: reducers,
 				routing: routerReducer
 			}),
-			applyMiddleware(
-				thunkMiddleware
-			));
+			compose(
+				applyMiddleware(
+					thunkMiddleware
+				),
+				(typeof window !== 'undefined') && window.devToolsExtension ? window.devToolsExtension() : function(f) { return f; }
+			)
+			);
+			
+		var history = isNode() ?
+			createMemoryHistory(this.props.pathName) :
+			browserHistory;
 			
 		// Create an enhanced history that syncs navigation events with the store
-		this.history = syncHistoryWithStore(browserHistory, this.store)
+		this.history = syncHistoryWithStore(history, this.store)
 
 		this.history.listen(function(location) { console.log('location: ', location.pathname); });
 		

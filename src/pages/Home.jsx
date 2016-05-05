@@ -74,6 +74,7 @@ var Home = React.createClass({
                         <h3>View aggregated data in one place.</h3>
                     </center>
                     {menus}
+                    <h2>{this.props.params.categoryId}</h2>                    
                     <GridList>
                         {productTiles}
                     </GridList>
