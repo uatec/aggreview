@@ -137,28 +137,28 @@ var actions = {
     }
 };
 
-// if ( GLOBAL.env.stub_menus ) {
-//     actions.fetchMenus = function() {
-//         return {
-//             type: this.RECEIVE_MENUS,
-//             themeGroups: [{
-//                     id: 'themegroup_1',
-//                     name: 'Theme Group 1',
-//                     themes: [{
-//                         id: 'theme_1',
-//                         name: 'Theme 1'
-//                     }]
-//                 }],
-//             categories: [{
-//                     id: 'category_1',
-//                     name: 'Category 1',
-//                     subCategories: [{
-//                         id: 'subCategory_1',
-//                         name: 'Subcategory 1'
-//                     }]
-//                 }]
-//         };
-//     };
-// }
+if ( GLOBAL.env.stub_menus ) {
+    actions.fetchMenus = function() {
+        return {
+            type: this.RECEIVE_MENUS,
+            themeGroups: [{
+                    id: 'themegroup_1',
+                    name: 'Theme Group 1',
+                    themes: [{
+                        id: 'theme_1',
+                        name: 'Theme 1'
+                    }]
+                }],
+            categories: [{
+                    id: 'category_1',
+                    name: 'Category 1',
+                    subCategories: [{
+                        id: 'subCategory_1',
+                        name: 'Subcategory 1'
+                    }]
+                }]
+        };
+    };
+}
 
 module.exports = actions;

@@ -3,7 +3,6 @@ var app = express();
 
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
-var App = require('./generated/app');
 var path = require('path');
 var _ = require('lodash');
 
@@ -27,6 +26,7 @@ app.use('/api/v1/products', productsApi);
 // Static assets
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
+var App = require('./generated/app');
 app.get('/*', function(request, response) {
   var body = '';
   if ( GLOBAL.env.enable_isomorphic_rendering ) {
