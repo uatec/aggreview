@@ -50,13 +50,19 @@ module.exports = {
 
             if ( GLOBAL.env.stub_menus ) {
                 dispatch(this.receiveMenus([{
-                    id: 'theme_1',
-                    name: 'Theme 1',
-                    themes: []
+                    id: 'themegroup_1',
+                    name: 'Theme Group 1',
+                    themes: [{
+                        id: 'theme_1',
+                        name: 'Theme 1'
+                    }]
                 }], [{
                     id: 'category_1',
                     name: 'Category 1',
-                    subCategories: []
+                    subCategories: [{
+                        id: 'subCategory_1',
+                        name: 'Subcategory 1'
+                    }]
                 }]));
                 return;  
             }
@@ -116,7 +122,7 @@ module.exports = {
                         .map(function(i) {
                             return Object.assign({}, i.fields, {
                                 id: i.sys.id,
-                                subCategories2: _.chain(i.fields.subCategories2)
+                                subCategories: _.chain(i.fields.subCategories2)
                                     .map(function(t) {
                                         return _.find(subcategories, {
                                             id: t.sys.id

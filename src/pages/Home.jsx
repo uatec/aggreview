@@ -41,6 +41,15 @@ var Home = React.createClass({
                 <Link to={'/category/' + c.id}>
                     {c.name}
                 </Link>
+                <ul>
+                    {c.subCategories.map(function(sc) {
+                      return <li>
+                            <Link to={'/category/' + c.id + '/' + sc.id}>
+                            {sc.name}
+                            </Link>
+                        </li>  
+                    })}
+                </ul>
              </li>;
         }) : [];
         
@@ -50,9 +59,12 @@ var Home = React.createClass({
                     {tg.name}
                 </Link>
                 <ul>
-                
                     {tg.themes.map(function(t) {
-                      return <li>{t.name}</li>  
+                      return <li>
+                            <Link to={'/theme/' + tg.id + '/' + t.id}>
+                                {t.name}
+                            </Link>
+                        </li>  
                     })}
                 </ul>
              </li>;
