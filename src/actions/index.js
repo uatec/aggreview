@@ -11,7 +11,73 @@ if (isNode()) {
 
 var prefix = require('superagent-prefix')(urlPrefix);
 
-module.exports = {
+var extractThemes = function(input) {
+    return _.chain(input.items)
+            .filter(function(i) {
+                return i.sys.contentType.sys.id == 'theme';
+            })
+            .map(function(i) {
+                return Object.assign({}, i.fields, {
+                    id: i.sys.id
+                });    
+            })
+            .value();
+};
+
+var extractThemeGroups = function(input, themes) {
+    return _.chain(input.items)
+            .filter(function(i) {
+                return i.sys.contentType.sys.id == 'themeGroup';
+            })
+            .map(function(i) {
+                return Object.assign({}, i.fields, {
+                    id: i.sys.id,
+                    themes: _.chain(i.fields.themes)
+                        .map(function(t) {
+                            return _.find(themes, {
+                                id: t.sys.id
+                            });
+                        })
+                        .value()
+                });    
+            })
+            .value();
+};
+
+var extractSubCategories = function(input) {
+    _.chain(input.items)
+            .filter(function(i) {
+                return i.sys.contentType.sys.id == 'subCategory';
+            })
+            .map(function(i) {
+                return Object.assign({}, i.fields, {
+                    id: i.sys.id
+                }); 
+            })
+            .value();
+};
+
+var extractSubCategories = function(input, subcategories) {
+    return _.chain(input.items)
+            .filter(function(i) {
+                return i.sys.contentType.sys.id == 'category';
+            })
+            .map(function(i) {
+                return Object.assign({}, i.fields, {
+                    id: i.sys.id,
+                    subCategories: _.chain(i.fields.subCategories2)
+                        .map(function(t) {
+                            return _.find(subcategories, {
+                                id: t.sys.id
+                            });
+                        })
+                        .value()
+                });   
+            })
+            .value();
+};
+
+var actions = {
     
     RECEIVE_PRODUCTS: 'RECEIVE_PRODUCTS',
     receiveProducts: function(products)
@@ -37,7 +103,19 @@ module.exports = {
     },
     
     RECEIVE_MENUS: 'RECEIVE_MENUS',
-    receiveMenus: function(themeGroups, categories) {
+    receiveMenus: function(err, res) {
+        if (err) {
+            throw new Error(err);
+        }
+
+        var input = res.body;                    
+                            
+        var themes = extractThemes(input);
+        var themeGroups = extractThemeGroups(input, themes);
+            
+        var subcategories = extractSubCategories(input);
+        var categories = extractCategories(input, subcategories);
+            
         return {
             type: this.RECEIVE_MENUS,
             themeGroups: themeGroups,
@@ -48,94 +126,36 @@ module.exports = {
     fetchMenus: function() {
         return function(dispatch) {
 
-            if ( GLOBAL.env.stub_menus ) {
-                dispatch(this.receiveMenus([{
+            request
+                .get('https://cdn.contentful.com/spaces/l4qttwbwoj09/entries?access_token=4f16ed3bfca848053391d2040a9f78d721ca76806a54d3d17bf34f1b572de945')
+                .end(this.receiveMenus.bind(this));
+                
+        }.bind(this);     
+    }
+};
+
+if ( GLOBAL.env.stub_menus ) {
+    actions.fetchMenus = function() {
+        return {
+            type: this.RECEIVE_MENUS,
+            themeGroups: [{
                     id: 'themegroup_1',
                     name: 'Theme Group 1',
                     themes: [{
                         id: 'theme_1',
                         name: 'Theme 1'
                     }]
-                }], [{
+                }],
+            categories: [{
                     id: 'category_1',
                     name: 'Category 1',
                     subCategories: [{
                         id: 'subCategory_1',
                         name: 'Subcategory 1'
                     }]
-                }]));
-                return;  
-            }
-
-            request
-                .get('https://cdn.contentful.com/spaces/l4qttwbwoj09/entries?access_token=4f16ed3bfca848053391d2040a9f78d721ca76806a54d3d17bf34f1b572de945')
-                .end(function(err, res) {
-                    if (err) {
-                        throw new Error(err);
-                    }
-
-                    var input = res.body;                    
-                    
-                                        
-                    var themes = _.chain(input.items)
-                        .filter(function(i) {
-                            return i.sys.contentType.sys.id == 'theme';
-                        })
-                        .map(function(i) {
-                            return Object.assign({}, i.fields, {
-                                id: i.sys.id
-                            });    
-                        })
-                        .value();
-                    var themeGroups = _.chain(input.items)
-                        .filter(function(i) {
-                            return i.sys.contentType.sys.id == 'themeGroup';
-                        })
-                        .map(function(i) {
-                            return Object.assign({}, i.fields, {
-                                id: i.sys.id,
-                                themes: _.chain(i.fields.themes)
-                                    .map(function(t) {
-                                        return _.find(themes, {
-                                            id: t.sys.id
-                                        });
-                                    })
-                                    .value()
-                            });    
-                        })
-                        .value();
-                        
-                    var subcategories = _.chain(input.items)
-                        .filter(function(i) {
-                            return i.sys.contentType.sys.id == 'subCategory';
-                        })
-                        .map(function(i) {
-                            return Object.assign({}, i.fields, {
-                                id: i.sys.id
-                            })    
-                        })
-                        .value();
-                    var categories = _.chain(input.items)
-                        .filter(function(i) {
-                            return i.sys.contentType.sys.id == 'category';
-                        })
-                        .map(function(i) {
-                            return Object.assign({}, i.fields, {
-                                id: i.sys.id,
-                                subCategories: _.chain(i.fields.subCategories2)
-                                    .map(function(t) {
-                                        return _.find(subcategories, {
-                                            id: t.sys.id
-                                        });
-                                    })
-                                    .value()
-                            });   
-                        })
-                        .value();
-                        
-                    dispatch(this.receiveMenus(themeGroups, categories));
-                    
-                }.bind(this));
-        }.bind(this);     
-    }
-};
+                }]
+        };
+    };
+}
+                       
+module.exports = actions;
