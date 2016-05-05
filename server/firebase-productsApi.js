@@ -21,7 +21,6 @@ router
                     return data.body[key];
                 });
                 res.json(dataArray);
-                next();
             });
     });
 
