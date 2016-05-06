@@ -12,7 +12,9 @@ var Redux = require('redux'),
 
 var thunkMiddleware = require('redux-thunk').default;
 
-var Home = require('./pages/Home.jsx');
+var Home = require('./pages/Home.jsx'),
+	SubCategory = require('./pages/SubCategory.jsx'),
+	Category = require('./pages/Category.jsx');
 
 var reducers = require('./reducers');
 var actions = require('./actions');
@@ -53,11 +55,11 @@ var Root = React.createClass({
 
 		this.history.listen(function(location) { console.log('location: ', location.pathname); });
 		
-		if ( GLOBAL.env.enable_menus ) {
+		// if ( GLOBAL.env.enable_menus ) {
 			this.store.dispatch(actions.fetchMenus());
-		} else {
+		// } else {
 			this.store.dispatch(actions.fetchProducts());
-		}
+		// }
 		
 		if ( !isNode() ) {
 			// TODO: any client side only boot strapping
@@ -65,13 +67,15 @@ var Root = React.createClass({
 	},
 	
 	render: function() {
+		var doThemes = GLOBAL.env.enable_themes;
+		
 		return <Provider store={this.store}>
 				<Router history={this.history}>
 					<Route path="/" component={Home}>
-						<Route path="category/:categoryId" component={Home}/>
-						<Route path="category/:categoryId/:subCategoryId" component={Home}/>
-						<Route path="theme/:themeId" component={Home}/>
-						<Route path="theme/:themeGroupId/:themeId" component={Home}/>
+						<Route path="category/:categoryId" component={Category}/>
+						<Route path="category/:categoryId/:subCategoryId" component={SubCategory}/>
+						{doThemes ? <Route path="theme/:themeId" component={Home}/> : null}
+						{doThemes ? <Route path="theme/:themeGroupId/:themeId" component={Home}/> : null}
 					</Route>
 				</Router>
 			</Provider>;

@@ -10,7 +10,7 @@ var env = require('node-env-file');
 env('./.env', {raise: false});
 
 var envVars = '<script>GLOBAL = {}; GLOBAL.env=' + JSON.stringify(_.pick(process.env, [
-  'enable_menus', 'stub_menus', 'contentful_space_id', 'contentful_access_token'
+  'enable_menus', 'stub_menus', 'contentful_space_id', 'contentful_access_token', 'enable_themes'
   ])) + '</script>';
   
 GLOBAL.env = process.env;

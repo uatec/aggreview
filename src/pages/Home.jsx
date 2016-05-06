@@ -11,7 +11,6 @@ var actions = require('../actions');
 
 var mapStateToProps = function(state) {
     return {
-        products: state.reducers.products,
         categories: state.reducers.categories,
         themeGroups: state.reducers.themeGroups
     }; 
@@ -25,17 +24,9 @@ var mapDispatchToProps = function(dispatch) {
 };
 
 var Home = React.createClass({
-
+    
     render: function() {
 
-        var productTiles = this.props.products ? this.props.products.map(function(p) {
-            return <GridTile
-                        title={p.title[0]}
-                        subtitle={p.description[0]}>
-                        <img src={p.imageUrl[0]} />
-            </GridTile>;           
-        }) : [];
-        
         var categories = this.props.categories ? this.props.categories.map(function(c) {
              return <li>
                 <Link to={'/category/' + c.id}>
@@ -75,21 +66,20 @@ var Home = React.createClass({
                 <ul>
                     {categories}
                 </ul>
+                {GLOBAL.env.enable_themes ? 
                 <ul>
                     {themeGroups}
-                </ul>
+                </ul> : null}
             </div> : null;
 
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Aggreview</h1>
-                        <h3>View aggregated data in one place.</h3>
+                        <span>View aggregated data in one place.</span>
                     </center>
                     {menus}
-                    <h2>{this.props.params.categoryId}</h2>                    
-                    <GridList>
-                        {productTiles}
-                    </GridList>
+                    <hr />
+                    {this.props.children}
                 </div>;
     }
 });
