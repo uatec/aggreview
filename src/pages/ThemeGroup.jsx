@@ -41,6 +41,7 @@ var Home = React.createClass({
         
         return  <div>
                     <h2>{this.props.themeGroup ? this.props.themeGroup.name : '...'}</h2>
+                    <span>{this.props.themeGroup ? JSON.stringify(this.props.themeGroup.tags): null}</span>
                     <GridList>
                         {productTiles}
                     </GridList>

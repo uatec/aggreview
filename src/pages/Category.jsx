@@ -41,6 +41,7 @@ var Home = React.createClass({
         
         return  <div>
                     <h2>{this.props.category ? this.props.category.name : '...'}</h2>
+                    <span>{this.props.category ? JSON.stringify(this.props.category.tags): null}</span>
                     <GridList>
                         {productTiles}
                     </GridList>

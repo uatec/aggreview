@@ -32,8 +32,8 @@ var Home = React.createClass({
     },
 
     render: function () {
-        
-        if ( !this.props.category ) {
+
+        if (!this.props.category) {
             return <div>...</div>;
         }
 
@@ -44,10 +44,12 @@ var Home = React.createClass({
                 <img src={p.imageUrl[0]} />
             </GridTile>;
         }) : [];
-        
+
         return <div>
             <h2>{this.props.category.name}</h2>
             <h3>{this.props.subCategory.name}</h3>
+            <span>{this.props.subCategory ? JSON.stringify(this.props.subCategory.tags) : null}</span>
+
             <GridList>
                 {productTiles}
             </GridList>
