@@ -8,8 +8,12 @@ var collectionName = GLOBAL.env.products_mongo_collection;
 router
     .get('/', function (req, res, next) {
         MongoClient.connect(url, function(err, db) {
+            var query = {tags: {
+                $in: req.query.tags || []
+            }};
+            console.log('QUERY - ' + JSON.stringify(req.params.tags) + ' -> ' + JSON.stringify(query));
             var products = db.collection(collectionName);
-            products.find({}).toArray(function(err, docs) {
+            products.find(query).toArray(function(err, docs) {
                 if ( err ) {
                     throw new Error(err);
                 }

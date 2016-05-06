@@ -61,16 +61,14 @@ var Home = React.createClass({
              </li>;
         }) : [];
         
-        var menus = GLOBAL.env.enable_menus ? 
-            <div>
+        var menus = <div>
                 <ul>
                     {categories}
                 </ul>
-                {GLOBAL.env.enable_themes ? 
                 <ul>
                     {themeGroups}
-                </ul> : null}
-            </div> : null;
+                </ul>}
+            </div>;
 
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>

@@ -86,10 +86,10 @@ var actions = {
         };
     },
 
-    fetchProducts: function () {
+    fetchProducts: function (tags) {
         return function (dispatch) {
             request
-                .get('/products')
+                .get('/products?q=' + JSON.stringify(tags))
                 .use(prefix)
                 .end(function (err, res) {
                     if (err) {

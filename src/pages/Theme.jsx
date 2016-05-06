@@ -22,18 +22,23 @@ var Link = require('react-router').Link;
 
 var mapDispatchToProps = function (dispatch) {
     return {
+        fetchProducts: function (tags) {
+            dispatch(actions.fetchProducts(tags));
+        }
     };
 };
 
 var Home = React.createClass({
 
-    componentWillUpdate: function () {
-        //console.log(this.props.themeGroup);
+    componentWillMount: function () {
+        if (this.props.theme) {
+            this.props.fetchProducts(this.props.theme.tags);
+        }
     },
 
     render: function () {
-        
-        if ( !this.props.themeGroup ) {
+
+        if (!this.props.themeGroup) {
             return <div>...</div>;
         }
 
@@ -44,7 +49,7 @@ var Home = React.createClass({
                 <img src={p.imageUrl[0]} />
             </GridTile>;
         }) : [];
-        
+
         return <div>
             <h2>{this.props.themeGroup.name}</h2>
             <h3>{this.props.theme.name}</h3>

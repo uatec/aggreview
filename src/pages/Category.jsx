@@ -20,13 +20,19 @@ var Link = require('react-router').Link;
 
 var mapDispatchToProps = function(dispatch) {
   return {
+      fetchProducts: function(tags) {
+          dispatch(actions.fetchProducts(tags));
+      }
   };  
 };
 
 var Home = React.createClass({
     
-    componentWillUpdate: function() {
-        //console.log(this.props.category);
+    
+    componentWillMount: function() {
+        if ( this.props.category ) {
+            this.props.fetchProducts(this.props.category.tags);
+        }
     },
 
     render: function() {

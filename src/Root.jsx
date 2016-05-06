@@ -57,11 +57,7 @@ var Root = React.createClass({
 
 		this.history.listen(function(location) { console.log('location: ', location.pathname); });
 		
-		// if ( GLOBAL.env.enable_menus ) {
-			this.store.dispatch(actions.fetchMenus());
-		// } else {
-			this.store.dispatch(actions.fetchProducts());
-		// }
+		this.store.dispatch(actions.fetchMenus());
 		
 		if ( !isNode() ) {
 			// TODO: any client side only boot strapping
@@ -69,15 +65,14 @@ var Root = React.createClass({
 	},
 	
 	render: function() {
-		var doThemes = GLOBAL.env.enable_themes;
 		
 		return <Provider store={this.store}>
 				<Router history={this.history}>
 					<Route path="/" component={Home}>
 						<Route path="category/:categoryId" component={Category}/>
 						<Route path="category/:categoryId/:subCategoryId" component={SubCategory}/>
-						{doThemes ? <Route path="theme/:themeGroupId" component={ThemeGroup}/> : null}
-						{doThemes ? <Route path="theme/:themeGroupId/:themeId" component={Theme}/> : null}
+						<Route path="theme/:themeGroupId" component={ThemeGroup}/>
+						<Route path="theme/:themeGroupId/:themeId" component={Theme}/>
 					</Route>
 				</Router>
 			</Provider>;
