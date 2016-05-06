@@ -10,11 +10,11 @@ var mui = require('material-ui'),
 var actions = require('../actions');
 
 var mapStateToProps = function (state, ownProps) {
-    var category = _.chain(state.reducers.categories).find({ id: ownProps.params.categoryId }).value();
+    var themeGroup = _.chain(state.reducers.themeGroups).find({ id: ownProps.params.themeGroupId }).value();
     return {
         products: state.reducers.products,
-        category: category,
-        subCategory: category ? _.chain(category.subCategories).find({ id: ownProps.params.subCategoryId }).value() : null
+        themeGroup: themeGroup,
+        theme: themeGroup ? _.chain(themeGroup.themes).find({ id: ownProps.params.themeId }).value() : null
     };
 };
 
@@ -28,12 +28,12 @@ var mapDispatchToProps = function (dispatch) {
 var Home = React.createClass({
 
     componentWillUpdate: function () {
-        //console.log(this.props.category);
+        //console.log(this.props.themeGroup);
     },
 
     render: function () {
         
-        if ( !this.props.category ) {
+        if ( !this.props.themeGroup ) {
             return <div>...</div>;
         }
 
@@ -46,8 +46,8 @@ var Home = React.createClass({
         }) : [];
         
         return <div>
-            <h2>{this.props.category.name}</h2>
-            <h3>{this.props.subCategory.name}</h3>
+            <h2>{this.props.themeGroup.name}</h2>
+            <h3>{this.props.theme.name}</h3>
             <GridList>
                 {productTiles}
             </GridList>

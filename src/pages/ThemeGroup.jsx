@@ -12,7 +12,7 @@ var actions = require('../actions');
 var mapStateToProps = function(state, ownProps) {
     return {
         products: state.reducers.products,
-        category: _.chain(state.reducers.categories).find({id: ownProps.params.categoryId}).value()
+        themeGroup: _.chain(state.reducers.themeGroups).find({id: ownProps.params.themeGroupId}).value()
     }; 
 };
 
@@ -26,7 +26,7 @@ var mapDispatchToProps = function(dispatch) {
 var Home = React.createClass({
     
     componentWillUpdate: function() {
-        //console.log(this.props.category);
+        //console.log(this.props.themeGroup);
     },
 
     render: function() {
@@ -40,7 +40,7 @@ var Home = React.createClass({
         }) : [];
         
         return  <div>
-                    <h2>{this.props.category ? this.props.category.name : '...'}</h2>
+                    <h2>{this.props.themeGroup ? this.props.themeGroup.name : '...'}</h2>
                     <GridList>
                         {productTiles}
                     </GridList>

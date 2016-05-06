@@ -14,7 +14,9 @@ var thunkMiddleware = require('redux-thunk').default;
 
 var Home = require('./pages/Home.jsx'),
 	SubCategory = require('./pages/SubCategory.jsx'),
-	Category = require('./pages/Category.jsx');
+	Category = require('./pages/Category.jsx'),
+	ThemeGroup = require('./pages/ThemeGroup.jsx'),
+	Theme = require('./pages/Theme.jsx');
 
 var reducers = require('./reducers');
 var actions = require('./actions');
@@ -74,8 +76,8 @@ var Root = React.createClass({
 					<Route path="/" component={Home}>
 						<Route path="category/:categoryId" component={Category}/>
 						<Route path="category/:categoryId/:subCategoryId" component={SubCategory}/>
-						{doThemes ? <Route path="theme/:themeId" component={Home}/> : null}
-						{doThemes ? <Route path="theme/:themeGroupId/:themeId" component={Home}/> : null}
+						{doThemes ? <Route path="theme/:themeGroupId" component={ThemeGroup}/> : null}
+						{doThemes ? <Route path="theme/:themeGroupId/:themeId" component={Theme}/> : null}
 					</Route>
 				</Router>
 			</Provider>;
