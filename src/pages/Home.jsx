@@ -67,7 +67,7 @@ var Home = React.createClass({
                 </ul>
                 <ul>
                     {themeGroups}
-                </ul>}
+                </ul>
             </div>;
 
         return  <div>
