@@ -29,20 +29,25 @@ var mapDispatchToProps = function (dispatch) {
 };
 
 var Home = React.createClass({
-
-    componentWillMount: function () {
-        if (this.props.themeGroup) {
-            this.props.fetchProducts(this.props.themeGroup.tags);
+    componentWillReceiveProps: function (nextProps) {
+        if (this.props.params.themeGroupId != nextProps.params.themeGroupId) {
+            this.props.fetchProducts(nextProps.themeGroup.tags);
         }
     },
 
+    componentDidMount: function () {
+        if (this.props.themeGroup)
+            this.props.fetchProducts(this.props.themeGroup.tags);
+
+    },
+    
     render: function () {
 
         var productTiles = this.props.products ? _.chain(this.props.products).take(10).value().map(function (p) {
             return <GridTile
-                title={p.title[0]}
-                subtitle={p.description[0]}>
-                <img src={p.imageUrl[0]} />
+                        title={p.title}
+                        subtitle={p.description}>
+                        <img src={p.image} />
             </GridTile>;
         }) : [];
 

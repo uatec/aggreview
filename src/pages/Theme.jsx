@@ -29,13 +29,17 @@ var mapDispatchToProps = function (dispatch) {
 };
 
 var Home = React.createClass({
-
-    componentWillMount: function () {
-        if (this.props.theme) {
-            this.props.fetchProducts(this.props.theme.tags);
+    componentWillReceiveProps: function (nextProps) {
+        if (this.props.params.themeId != nextProps.params.themeId) {
+            this.props.fetchProducts(nextProps.theme.tags);
         }
     },
 
+    componentDidMount: function () {
+        if (this.props.theme)
+            this.props.fetchProducts(this.props.theme.tags);
+
+    },
     render: function () {
 
         if (!this.props.themeGroup) {
@@ -44,9 +48,9 @@ var Home = React.createClass({
 
         var productTiles = this.props.products ? _.chain(this.props.products).take(10).value().map(function (p) {
             return <GridTile
-                title={p.title[0]}
-                subtitle={p.description[0]}>
-                <img src={p.imageUrl[0]} />
+                        title={p.title}
+                        subtitle={p.description}>
+                        <img src={p.image} />
             </GridTile>;
         }) : [];
 
