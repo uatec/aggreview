@@ -14,7 +14,6 @@ var mapStateToProps = function (state, ownProps) {
         products: state.reducers.products,
         category: _.chain(state.reducers.categories).find({ id: ownProps.params.categoryId }).value()
     };
-    console.log('setting category props:', props);
     return props;
 };
 
@@ -30,14 +29,12 @@ var mapDispatchToProps = function (dispatch) {
 
 var Home = React.createClass({
     componentWillReceiveProps: function (nextProps) {
-        console.log('receiving new props:', this.props, '->', nextProps);
         if (this.props.params.categoryId != nextProps.params.categoryId) {
             this.props.fetchProducts(nextProps.category.tags);
         }
     },
 
     componentDidMount: function () {
-        console.log('component did mount with props:', this.props);
         if (this.props.category)
             this.props.fetchProducts(this.props.category.tags);
 
