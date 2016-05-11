@@ -9,7 +9,7 @@ router
     .get('/', function (req, res, next) {
         MongoClient.connect(url, function(err, db) {
             var query = {tags: {
-                $in: req.query.tags || []
+                $in: JSON.parse(req.query.q) || []
             }};
             console.log('QUERY - ' + JSON.stringify(req.params.tags) + ' -> ' + JSON.stringify(query));
             var products = db.collection(collectionName);

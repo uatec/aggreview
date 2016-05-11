@@ -88,6 +88,7 @@ var actions = {
 
     fetchProducts: function (tags) {
         return function (dispatch) {
+            tags = tags || [];
             request
                 .get('/products?q=' + JSON.stringify(tags))
                 .use(prefix)
