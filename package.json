@@ -37,10 +37,11 @@
     "watch": "./node_modules/.bin/webpack --progress --colors --hot --debug --devtool inline-source-map --watch",
     "dev": "./node_modules/.bin/webpack --progress --colors --hot --debug --devtools inline-source-map && ./node_modules/.bin/babel-node server",
     "prestart": "./node_modules/.bin/webpack --optimize-minimize",
-    "start": "./node_modules/.bin/babel-node server"
+    "start": "./node_modules/.bin/babel-node server",
+    "test": "./node_modules/.bin/ss"
   },
   "devDependencies": {
     "should": "^8.3.1",
-    "simplysafe": "^1.0.0"
+    "simplysafe": "^1.0.15"
   }
 }
