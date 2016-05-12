@@ -12,6 +12,10 @@ var Redux = require('redux'),
 
 var thunkMiddleware = require('redux-thunk').default;
 
+var mui = require('material-ui'),
+	MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default,
+	getMuiTheme = require('material-ui/styles/getMuiTheme').default;
+
 var Home = require('./pages/Home.jsx'),
 	SubCategory = require('./pages/SubCategory.jsx'),
 	Category = require('./pages/Category.jsx'),
@@ -33,8 +37,9 @@ var ReactRouterRedux = require('react-router-redux'),
 	syncHistoryWithStore = ReactRouterRedux.syncHistoryWithStore,
 	routerReducer = ReactRouterRedux.routerReducer;
 
+
 var Root = React.createClass({
-	componentWillMount: function() {
+	componentWillMount: function () {
 		this.store = createStore(
 			combineReducers({
 				reducers: reducers,
@@ -44,29 +49,30 @@ var Root = React.createClass({
 				applyMiddleware(
 					thunkMiddleware
 				),
-				(typeof window !== 'undefined') && window.devToolsExtension ? window.devToolsExtension() : function(f) { return f; }
+				(typeof window !== 'undefined') && window.devToolsExtension ? window.devToolsExtension() : function (f) { return f; }
 			)
-			);
-			
+		);
+		
 		var history = isNode() ?
 			createMemoryHistory(this.props.pathName) :
 			browserHistory;
-			
+
 		// Create an enhanced history that syncs navigation events with the store
 		this.history = syncHistoryWithStore(history, this.store)
 
-		this.history.listen(function(location) { console.log('location: ', location.pathname); });
-		
+		this.history.listen(function (location) { console.log('location: ', location.pathname); });
+
 		this.store.dispatch(actions.fetchMenus());
-		
-		if ( !isNode() ) {
+
+		if (!isNode()) {
 			// TODO: any client side only boot strapping
 		}
 	},
-	
-	render: function() {
-		
-		return <Provider store={this.store}>
+
+	render: function () {
+
+		return <MuiThemeProvider muiTheme={getMuiTheme() }>
+			<Provider store={this.store}>
 				<Router history={this.history}>
 					<Route path="/" component={Home}>
 						<Route path="category/:categoryId" component={Category}/>
@@ -75,7 +81,8 @@ var Root = React.createClass({
 						<Route path="theme/:themeGroupId/:themeId" component={Theme}/>
 					</Route>
 				</Router>
-			</Provider>;
+			</Provider>
+		</MuiThemeProvider>;
 	}
 });
 

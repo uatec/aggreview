@@ -14,7 +14,7 @@
     "jsonpath-plus": "^0.15.0",
     "jsx-loader": "^0.13.2",
     "lodash": "^4.11.1",
-    "material-ui": "^0.14.4",
+    "material-ui": "^0.15.0",
     "mongodb": "^2.1.18",
     "node-env-file": "^0.1.8",
     "node-uuid": "^1.4.7",
