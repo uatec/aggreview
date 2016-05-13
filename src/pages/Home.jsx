@@ -10,39 +10,48 @@ var mapStateToProps = function (state) {
     };
 };
 
+var ListItem = require('material-ui/List').ListItem;
+
 var Home = React.createClass({
 
     render: function () {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
-            return <div key={c.id}>
+            return <ListItem key={c.id}>
                 <Link to={'/category/' + c.id}>
                     {c.name}
                 </Link>
-            </div>;
+            </ListItem>;
         }) : [];
 
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function (tg) {
-            return <div key={tg.id}>
+            return <ListItem key={tg.id}>
                 <Link to={'/theme/' + tg.id}>
                     {tg.name}
                 </Link>
-            </div>;
+            </ListItem>;
         }) : [];
 
 
         return <div>
-            <div>
-                Shop by Category
-                {categories}
+            <div style={{width: '100%'}}>
+                <div style={{ width: '33%', display: 'inline-block', verticalAlign: 'top' }}>
+                    <ListItem>
+                    Shop by Category
+                    </ListItem>
+                    {categories}
+                </div>
+                <div style={{ width: '66%', display: 'inline-block', verticalAlign: 'top'  }}>
+                    <ListItem>
+                    Shop by Room
+                    </ListItem>
+                    {themeGroups}
+                </div>
             </div>
-            <div>
-                Shop by Room
-                {themeGroups}
+            <div style={{width: '100%'}}>
+                <h2>Welcome</h2>
+                <h3>Try using the menus</h3>
             </div>
-
-            <h2>Welcome</h2>
-            <h3>Try using the menus</h3>
         </div>;
     }
 });

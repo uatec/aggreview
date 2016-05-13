@@ -93,7 +93,6 @@ var MasterPage = React.createClass({
                 open={!!this.state.drawerOpen}>
                 {menus}
             </Drawer>
-            <hr />
             {this.props.children}
         </div>;
     }
