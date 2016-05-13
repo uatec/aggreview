@@ -12,6 +12,9 @@ var mui = require('material-ui'),
     ListItem = mui.ListItem,
     Divider = mui.Divider;
 
+var IconButton = require('material-ui/IconButton').default;
+var MenuIcon = require('material-ui/svg-icons/navigation/menu').default;
+
 var actions = require('../actions');
 
 var mapStateToProps = function (state) {
@@ -82,8 +85,7 @@ var MasterPage = React.createClass({
         return <div>
             <AppBar
                 title="Aggreview"
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
-                onClick={this.toggleDrawer}
+                iconElementLeft={<IconButton onClick={this.toggleDrawer}><MenuIcon /></IconButton>}
                 />
             <Drawer 
                 docked={false}
