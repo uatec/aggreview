@@ -43,37 +43,33 @@ var Home = React.createClass({
     render: function () {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
-            return <ListItem>
-                <Link to={'/category/' + c.id} 
-                onClick={this.toggleDrawer}>
-                    {c.name}
-                </Link>
-                <List>
+            return <ListItem nestedItems=
                     {c.subCategories.map(function (sc) {
                         return <ListItem onClick={this.toggleDrawer}>
                             <Link to={'/category/' + c.id + '/' + sc.id}>
                                 {sc.name}
                             </Link>
                         </ListItem>
-                    }) }
-                </List>
+                    })}>
+                <Link to={'/category/' + c.id} 
+                onClick={this.toggleDrawer}>
+                    {c.name}
+                </Link>
             </ListItem>;
         }) : [];
 
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function (tg) {
-            return <ListItem>
-                <Link to={'/theme/' + tg.id} onClick={this.toggleDrawer}>
-                    {tg.name}
-                </Link>
-                <List>
+            return <ListItem nestedItems=
                     {tg.themes.map(function (t) {
                         return <ListItem onClick={this.toggleDrawer}>
                             <Link to={'/theme/' + tg.id + '/' + t.id}>
                                 {t.name}
                             </Link>
                         </ListItem>
-                    }) }
-                </List>
+                    })}>
+                <Link to={'/theme/' + tg.id} onClick={this.toggleDrawer}>
+                    {tg.name}
+                </Link>
             </ListItem>;
         }) : [];
 
