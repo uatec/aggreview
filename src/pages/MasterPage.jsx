@@ -84,7 +84,7 @@ var MasterPage = React.createClass({
 
         return <div>
             <AppBar
-                title="Aggreview"
+                title={<Link to='/'>Aggreview</Link>}
                 iconElementLeft={<IconButton onClick={this.toggleDrawer}><MenuIcon /></IconButton>}
                 />
             <Drawer 
