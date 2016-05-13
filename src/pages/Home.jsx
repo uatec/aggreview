@@ -17,7 +17,7 @@ var Home = React.createClass({
     render: function () {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
-            return <ListItem key={c.id}>
+            return <ListItem style={{ background: '#E57373' }} key={c.id}>
                 <Link to={'/category/' + c.id}>
                     {c.name}
                 </Link>
@@ -25,7 +25,7 @@ var Home = React.createClass({
         }) : [];
 
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function (tg) {
-            return <ListItem key={tg.id}>
+            return <ListItem style={{ background: '#FFCB28' }}key={tg.id}>
                 <Link to={'/theme/' + tg.id}>
                     {tg.name}
                 </Link>
@@ -35,15 +35,15 @@ var Home = React.createClass({
 
         return <div>
             <div style={{width: '100%'}}>
-                <div style={{ width: '33%', display: 'inline-block', verticalAlign: 'top' }}>
-                    <ListItem>
-                    Shop by Category
+                <div style={{width: '33%', display: 'inline-block', verticalAlign: 'top' }}>
+                    <ListItem style={{background: '#DC6263'}}>
+                        Shop by Category
                     </ListItem>
                     {categories}
                 </div>
-                <div style={{ width: '66%', display: 'inline-block', verticalAlign: 'top'  }}>
-                    <ListItem>
-                    Shop by Room
+                <div style={{width: '66%', display: 'inline-block', verticalAlign: 'top'  }}>
+                    <ListItem style={{background: '#F1B837'}}>
+                        Shop by Room
                     </ListItem>
                     {themeGroups}
                 </div>
