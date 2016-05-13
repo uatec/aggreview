@@ -43,9 +43,9 @@ var MasterPage = React.createClass({
     render: function () {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
-            return <ListItem nestedItems=
+            return <ListItem key={c.id} nestedItems=
                     {c.subCategories.map(function (sc) {
-                        return <ListItem onClick={this.toggleDrawer}>
+                        return <ListItem key={sc.id} onClick={this.toggleDrawer}>
                             <Link to={'/category/' + c.id + '/' + sc.id}>
                                 {sc.name}
                             </Link>
@@ -59,9 +59,9 @@ var MasterPage = React.createClass({
         }) : [];
 
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function (tg) {
-            return <ListItem nestedItems=
+            return <ListItem key={tg.id} nestedItems=
                     {tg.themes.map(function (t) {
-                        return <ListItem onClick={this.toggleDrawer}>
+                        return <ListItem key={t.id} onClick={this.toggleDrawer}>
                             <Link to={'/theme/' + tg.id + '/' + t.id}>
                                 {t.name}
                             </Link>
