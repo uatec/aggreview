@@ -17,7 +17,9 @@ var mui = require('material-ui'),
 	getMuiTheme = require('material-ui/styles/getMuiTheme').default;
 
 var Home = require('./pages/Home.jsx'),
+	MasterPage = require('./pages/MasterPage.jsx'),
 	SubCategory = require('./pages/SubCategory.jsx'),
+	NoMatch = require('./pages/NoMatch.jsx'),
 	Category = require('./pages/Category.jsx'),
 	ThemeGroup = require('./pages/ThemeGroup.jsx'),
 	Theme = require('./pages/Theme.jsx');
@@ -29,6 +31,7 @@ var isNode = require('./utils/isNode.js');
 
 var ReactRouter = require('react-router'),
 	Router = ReactRouter.Router,
+	IndexRoute = ReactRouter.IndexRoute,
 	Route = ReactRouter.Route,
 	browserHistory = ReactRouter.browserHistory,
 	createMemoryHistory = ReactRouter.createMemoryHistory;
@@ -52,7 +55,7 @@ var Root = React.createClass({
 				(typeof window !== 'undefined') && window.devToolsExtension ? window.devToolsExtension() : function (f) { return f; }
 			)
 		);
-		
+
 		var history = isNode() ?
 			createMemoryHistory(this.props.pathName) :
 			browserHistory;
@@ -73,12 +76,14 @@ var Root = React.createClass({
 
 		return <MuiThemeProvider muiTheme={getMuiTheme() }>
 			<Provider store={this.store}>
-				<Router history={this.history}>
-					<Route path="/" component={Home}>
+				<Router history={this.history}>	
+					<Route path="/" component={MasterPage}>
+				    	<IndexRoute component={Home} />
 						<Route path="category/:categoryId" component={Category}/>
 						<Route path="category/:categoryId/:subCategoryId" component={SubCategory}/>
 						<Route path="theme/:themeGroupId" component={ThemeGroup}/>
 						<Route path="theme/:themeGroupId/:themeId" component={Theme}/>
+						<Route path="*" component={NoMatch}/>
 					</Route>
 				</Router>
 			</Provider>

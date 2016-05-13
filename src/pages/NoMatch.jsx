@@ -8,8 +8,8 @@ var NoMatch = React.createClass({
     render: function () {
 
         return <div>
-            <h2>Welcome</h2>
-            <h3>Try using the menus</h3>
+            <h2>Oops, there's nothing here</h2>
+            <h3><Link to='/'>How about going to the home page?</Link></h3>
         </div>;
     }
 });
