@@ -31,50 +31,52 @@ var mapDispatchToProps = function (dispatch) {
     };
 };
 
-var MasterPage = React.createClass({
+class MasterPage extends React.Component {
 
-    toggleDrawer: function() {
+    constructor(props) {
+        super(props);
+        
+        this.state = {};    
+    }
+    
+    toggleDrawer() {
         this.setState({
             drawerOpen: !this.state.drawerOpen
         });
-    },
-    
-    getInitialState: function() {
-        return {};
-    },
+    }
 
-    render: function () {
+    render () {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
             return <ListItem key={c.id} nestedItems=
                     {c.subCategories.map(function (sc) {
-                        return <ListItem key={sc.id} onClick={this.toggleDrawer}>
+                        return <ListItem key={sc.id} onClick={this.toggleDrawer.bind(this)}>
                             <Link to={'/category/' + c.id + '/' + sc.id}>
                                 {sc.name}
                             </Link>
                         </ListItem>
-                    })}>
+                    }.bind(this))}>
                 <Link to={'/category/' + c.id} 
-                onClick={this.toggleDrawer}>
+                onClick={this.toggleDrawer.bind(this)}>
                     {c.name}
                 </Link>
             </ListItem>;
-        }) : [];
+        }.bind(this)) : [];
 
         var themeGroups = this.props.themeGroups ? this.props.themeGroups.map(function (tg) {
             return <ListItem key={tg.id} nestedItems=
                     {tg.themes.map(function (t) {
-                        return <ListItem key={t.id} onClick={this.toggleDrawer}>
+                        return <ListItem key={t.id} onClick={this.toggleDrawer.bind(this)}>
                             <Link to={'/theme/' + tg.id + '/' + t.id}>
                                 {t.name}
                             </Link>
                         </ListItem>
-                    })}>
-                <Link to={'/theme/' + tg.id} onClick={this.toggleDrawer}>
+                    }.bind(this))}>
+                <Link to={'/theme/' + tg.id} onClick={this.toggleDrawer.bind(this)}>
                     {tg.name}
                 </Link>
             </ListItem>;
-        }) : [];
+        }.bind(this)) : [];
 
         var menus = <div>
                 {categories}
@@ -85,7 +87,7 @@ var MasterPage = React.createClass({
         return <div>
             <AppBar
                 title={<Link to='/'>Aggreview</Link>}
-                iconElementLeft={<IconButton onClick={this.toggleDrawer}><MenuIcon /></IconButton>}
+                iconElementLeft={<IconButton onClick={this.toggleDrawer.bind(this)}><MenuIcon /></IconButton>}
                 />
             <Drawer 
                 docked={false}
@@ -96,7 +98,7 @@ var MasterPage = React.createClass({
             {this.props.children}
         </div>;
     }
-});
+};
 
 module.exports = connect(
     mapStateToProps,

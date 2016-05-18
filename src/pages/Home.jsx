@@ -11,10 +11,11 @@ var mapStateToProps = function (state) {
 };
 
 var ListItem = require('material-ui/List').ListItem;
+import {Tabs, Tab} from 'material-ui/Tabs';
 
-var Home = React.createClass({
+class Home extends React.Component {
 
-    render: function () {
+    render() {
 
         var categories = this.props.categories ? this.props.categories.map(function (c) {
             return <ListItem style={{ background: '#E57373' }} key={c.id}>
@@ -34,27 +35,40 @@ var Home = React.createClass({
 
 
         return <div>
-            <div style={{width: '100%'}}>
-                <div style={{width: '33%', display: 'inline-block', verticalAlign: 'top' }}>
-                    <ListItem style={{background: '#DC6263'}}>
-                        Shop by Category
-                    </ListItem>
+            <Tabs>
+                <Tab
+                    value='category'
+                    label="Shop by Category"
+                    route="/category"
+                    >
                     {categories}
-                </div>
-                <div style={{width: '66%', display: 'inline-block', verticalAlign: 'top'  }}>
-                    <ListItem style={{background: '#F1B837'}}>
-                        Shop by Room
-                    </ListItem>
+                </Tab>
+                
+                <Tab
+                    value='theme'
+                    label="Shop by Room"
+                    route="/theme"
+                    >
                     {themeGroups}
-                </div>
-            </div>
-            <div style={{width: '100%'}}>
+                </Tab>
+                
+                <Tab
+                    value='newlyfeatured'
+                    label="Newly featured"
+                    route="/newlyfeatured"
+                    >
+                </Tab>
+
+
+            </Tabs>
+
+            <div style={{ width: '100%' }}>
                 <h2>Welcome</h2>
                 <h3>Try using the menus</h3>
             </div>
         </div>;
     }
-});
+};
 
 module.exports = connect(
     mapStateToProps

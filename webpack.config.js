@@ -8,7 +8,7 @@ var loaders = [
             {
                 //tell webpack to use jsx-loader for all *.jsx files
                 test: /\.jsx$/,
-                loader: 'jsx-loader?harmony'
+                loader: 'jsx-loader?harmony!babel'
             },
             {
                 test: /\.css$/,
@@ -33,6 +33,7 @@ var loaders = [
         ];
 
 module.exports = [{
+  devtool: 'sourcemap',
   name: 'client',
   target: 'web',
   context: CLIENT_DIR,
@@ -51,6 +52,7 @@ module.exports = [{
   }
 },
 {
+  devtool: 'sourcemap',
   name: 'server',
   target: 'node',
   context: CLIENT_DIR,
